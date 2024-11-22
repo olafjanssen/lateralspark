@@ -37,21 +37,33 @@
         .right {
             right: 0;
         }
-        .position-number {
+        .header {
+            text-align: center;
             font-size: 0.9em;
             color: #6c757d;
+            margin-bottom: 20px;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             text-align: center;
-            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="header" id="bookTitle">Ebook Title Here</div>
         <div class="clickable-area" id="contentArea">
             <div id="content" class="markdown-body"></div>
             <div class="left" onclick="prevPage()"></div>
             <div class="right" onclick="nextPage()"></div>
         </div>
+        <div class="footer" id="positionNumber">Position: 0</div>
     </div>
 
     <script>
@@ -73,6 +85,13 @@
         function processPages(text) {
             // Split the document into chapters based on headers
             const chapters = text.split(/\n(?=#)/); // Split on lines that start with a header
+
+            // Set the book title from the first header
+            const firstHeader = text.match(/(?:#{1,6}\s)(.+)/);
+            if (firstHeader) {
+                const bookTitle = firstHeader[1]; // Get the title text
+                document.getElementById('bookTitle').textContent = bookTitle; // Set the header title
+            }
 
             let processedPages = [];
 
@@ -123,13 +142,11 @@
             page.className = 'page active';
             page.innerHTML = marked(pages[pageIndex]);
 
-            // Calculate the character position divided by 128
+            // Update the footer with the character position
             const charPosition = calculateCharacterPosition(pageIndex);
-            const positionNumberDiv = document.createElement('div');
-            positionNumberDiv.className = 'position-number';
+            const positionNumberDiv = document.getElementById('positionNumber');
             positionNumberDiv.textContent = `Position: ${charPosition}`;
 
-            contentDiv.appendChild(positionNumberDiv);
             contentDiv.appendChild(page);
             updateNavigation();
         }
@@ -165,6 +182,7 @@
             // Optional: You can add visual feedback for navigation if needed
         }
 
+
         // Add keyboard navigation
         document.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowRight') {
@@ -173,7 +191,7 @@
                 prevPage();
             }
         });
-
+        
         // Load the Markdown content when the page is loaded
         window.onload = loadMarkdown;
     </script>
