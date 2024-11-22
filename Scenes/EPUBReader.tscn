@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dwrh5cc4hatr1"]
+
+[node name="EPUBReader" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="EPUBReader#VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+
+[node name="VBoxContainer#TextLabel" type="Label" parent="."]
+layout_mode = 0
+size_flags_vertical = 1
+text = "Welcome to the EPUB Reader!"
+
+[node name="VBoxContainer#HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+
+[node name="HBoxContainer#PreviousPage" type="Button" parent="."]
+layout_mode = 0
+text = "Previous Page"
