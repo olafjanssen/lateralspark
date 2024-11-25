@@ -6,3 +6,5 @@
 venv
 *.epub
 ebook.md
+
+.DS_Store
